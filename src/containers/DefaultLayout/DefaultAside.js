@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Nav, NavItem, NavLink, Progress, TabContent, TabPane, ListGroup, ListGroupItem } from 'reactstrap';
+import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { AppSwitch } from '@coreui/react'
+// import { AppSwitch } from '@coreui/react'
 
 const propTypes = {
   children: PropTypes.node,
@@ -17,7 +17,7 @@ class DefaultAside extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: '1',
+      activeTab: '2',
     };
   }
 
@@ -37,14 +37,14 @@ class DefaultAside extends Component {
     return (
       <React.Fragment>
         <Nav tabs>
-          <NavItem>
+          {/* <NavItem>
             <NavLink className={classNames({ active: this.state.activeTab === '1' })}
                      onClick={() => {
                        this.toggle('1');
                      }}>
               <i className="icon-list"></i>
             </NavLink>
-          </NavItem>
+          </NavItem> */}
           <NavItem>
             <NavLink className={classNames({ active: this.state.activeTab === '2' })}
                      onClick={() => {
@@ -53,17 +53,17 @@ class DefaultAside extends Component {
               <i className="icon-speech"></i>
             </NavLink>
           </NavItem>
-          <NavItem>
+          {/* <NavItem>
             <NavLink className={classNames({ active: this.state.activeTab === '3' })}
                      onClick={() => {
                        this.toggle('3');
                      }}>
               <i className="icon-settings"></i>
             </NavLink>
-          </NavItem>
+          </NavItem> */}
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId="1">
+          {/* <TabPane tabId="1">
             <ListGroup className="list-group-accent" tag={'div'}>
               <ListGroupItem className="list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Today</ListGroupItem>
               <ListGroupItem action tag="a" href="#" className="list-group-item-accent-warning list-group-item-divider">
@@ -147,7 +147,7 @@ class DefaultAside extends Component {
                 </div>
               </ListGroupItem>
             </ListGroup>
-          </TabPane>
+          </TabPane> */}
           <TabPane tabId="2" className="p-3">
             <div className="message">
               <div className="py-3 pb-5 mr-3 float-left">
@@ -234,7 +234,7 @@ class DefaultAside extends Component {
               </small>
             </div>
           </TabPane>
-          <TabPane tabId="3" className="p-3">
+          {/* <TabPane tabId="3" className="p-3">
             <h6>Settings</h6>
 
             <div className="aside-options">
@@ -304,7 +304,7 @@ class DefaultAside extends Component {
             </div>
             <Progress className="progress-xs" color="success" value="10" />
             <small className="text-muted">25GB/256GB</small>
-          </TabPane>
+          </TabPane> */}
         </TabContent>
       </React.Fragment>
     );
