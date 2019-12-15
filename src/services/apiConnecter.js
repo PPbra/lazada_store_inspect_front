@@ -8,7 +8,7 @@ const callFetch = (url,method="GET",body)=>{
         return fetch(`${URL}${url}`,{
             headers,
             method:method,
-            body
+            body:JSON.stringify(body)
         })
         .then(res=>res.json())
         .catch(err=>err)
@@ -26,5 +26,8 @@ const callFetch = (url,method="GET",body)=>{
 module.exports = {
     getAllShops :()=>{
         return callFetch("/shops");
+    },
+    addShopByURL:(url)=>{
+        return callFetch("/shops","POST",{	shopUrl:url});
     }
 }
