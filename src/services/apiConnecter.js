@@ -44,5 +44,8 @@ module.exports = {
     },
     getNotis:()=>{
         return callFetch("/notifications","GET");
+    },
+    markNoti:(notiId)=>{
+        return callFetch("/notifications/"+notiId,"POST",{});
     }
 }

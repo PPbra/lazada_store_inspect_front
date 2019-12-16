@@ -91,7 +91,7 @@ class DefaultLayout extends Component {
           </main>
           <AppAside fixed>
             <Suspense fallback={this.loading()}>
-              <DefaultAside notis={this.state.notis}/>
+              <DefaultAside loadNoti={this._getNotis} notis={this.state.notis}/>
             </Suspense>
           </AppAside>
         </div>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Nav, NavItem, NavLink, TabContent, TabPane,Badge } from 'reactstrap';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import APICaller from '../../services/apiConnecter';
+import dateTime from '../../services/date-time';
 // import { AppSwitch } from '@coreui/react'
 
 const propTypes = {
@@ -33,7 +35,9 @@ class DefaultAside extends Component {
 
   _renderNotis = ()=>{
     const {notis} = this.props;
-    return notis.map(e=>{
+    const notiss = notis.reverse();
+
+    return notiss.map(e=>{
       return(
         <div key={e.id}>
             <div className="message">
@@ -47,10 +51,17 @@ class DefaultAside extends Component {
                 <small className="text-muted">Admin</small>
                 {
                   (e.marked)?<small style={{cursor:"pointer"}} className="text-muted float-right mt-1">Read</small>:
-                  <small style={{cursor:"pointer"}} className="text-muted float-right mt-1">Mark as read</small>
+                  <small style={{cursor:"pointer"}} className="text-muted float-right mt-1" onClick={()=>{
+                    APICaller.markNoti(e.id)
+                      .then(res=>{
+                        if(res.success){
+                          this.props.loadNoti();
+                        }
+                      })
+                  }}>Mark as read</small>
                 }
               </div>
-              <div className="text-truncate font-weight-bold">Changed!</div>
+              <div className="text-truncate font-weight-bold">{dateTime.format(new Date(e.createdAt))}</div>
               <small style={{color:(!!e.marked)?"#73818f":"blue"}} >{e.message}</small>
             </div>
             <hr />
@@ -70,9 +81,9 @@ class DefaultAside extends Component {
           <NavItem>
             <NavLink className={classNames({ active: this.state.activeTab === '2' })}
                      onClick={() => {
-                       this.toggle('2');
+                       this.props.loadNoti()
                      }}>
-              <i className="icon-bell"></i><Badge pill color="danger">5</Badge>
+              <i className="icon-bell"></i><Badge pill color="danger">{this.props.notis.length}</Badge>
             </NavLink>
           </NavItem>
         </Nav>
