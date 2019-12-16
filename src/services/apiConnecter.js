@@ -41,5 +41,8 @@ module.exports = {
     },
     changeProductStatus:(productId,body)=>{
         return callFetch(`/products/${productId}/changeStatus`,"POST",body);
+    },
+    getNotis:()=>{
+        return callFetch("/notifications","GET");
     }
 }
