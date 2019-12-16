@@ -29,5 +29,17 @@ module.exports = {
     },
     addShopByURL:(url)=>{
         return callFetch("/shops","POST",{	shopUrl:url});
+    },
+    getShopImages:(shopId)=>{
+        return callFetch("/shopImages/"+shopId,"GET");
+    },
+    productsInit:(shopId)=>{
+        return callFetch("/productsInit/"+shopId,"POST",{});
+    },
+    getShopProducts:(shopId)=>{
+        return callFetch(`/shops/${shopId}/products`,"GET");
+    },
+    changeProductStatus:(productId,body)=>{
+        return callFetch(`/products/${productId}/changeStatus`,"POST",body);
     }
 }

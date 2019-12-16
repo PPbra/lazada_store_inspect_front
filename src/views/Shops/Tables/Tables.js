@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table,Button } from 'reactstrap';
 import APICaller from '../../../services/apiConnecter';
 import AddShopModel from '../add-shop-model';
+import ShopDetails from '../shop-detail-model';
+import dateTime from '../../../services/date-time';
 
 
 class Tables extends Component {
@@ -9,13 +11,21 @@ class Tables extends Component {
     super(props);
     this.state = {
       shops:[],
-      isOpenAddShop:false
+      isOpenAddShop:false,
+      isOpenShopDetails:false,
+      shopDetails:{}
     }
   }
 
   _handleClickOpenAddShop = ()=>{
     this.setState({
       isOpenAddShop:!this.state.isOpenAddShop
+    });
+  }
+
+  _handleClickOpenShopDetails = ()=>{
+    this.setState({
+      isOpenShopDetails:!this.state.isOpenShopDetails
     });
   }
 
@@ -29,16 +39,27 @@ class Tables extends Component {
         }
       })
   }
+
+  
+
+  _handleClickShopRow = (shop)=>{
+    this.setState({
+      shopDetails:shop,
+      isOpenShopDetails:true
+    })
+  }
+
   _shopsRender =()=>{
     const {shops} = this.state;
     return shops.map((shop)=>{
-      console.log(shop)
-      return  (<tr key={shop.id}>
+      return  (<tr key={shop.id} style={{cursor:"pointer"}} onClick={()=>{
+        this._handleClickShopRow(shop);
+      }} >
                 <td>{shop.id}</td>
                   <td>{shop.name}</td>
-                  <td>{shop.createdAt}</td>
+                  <td>{dateTime.format(new Date(shop.createdAt))}</td>
                   <td>{shop.products_count}</td>
-                  <td>
+                  <td >
                     <Badge color="success">Followed</Badge>
                   </td>
               </tr>)
@@ -48,6 +69,7 @@ class Tables extends Component {
     return (
       <div className="animated fadeIn">
         <AddShopModel modal={this.state.isOpenAddShop} toggle={this._handleClickOpenAddShop}/>
+        <ShopDetails modal={this.state.isOpenShopDetails} toggle={this._handleClickOpenShopDetails} shop={this.state.shopDetails}/>
         <Row>
           <Col xs="12" lg="12">
               <Card>
@@ -77,9 +99,6 @@ class Tables extends Component {
                     </PaginationItem>
                     <PaginationItem active>
                       <PaginationLink tag="button">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink tag="button">2</PaginationLink>
                     </PaginationItem>
                     <PaginationItem>
                       <PaginationLink next tag="button"></PaginationLink>
