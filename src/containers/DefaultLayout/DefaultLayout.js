@@ -63,7 +63,7 @@ class DefaultLayout extends Component {
          <ToastsContainer store={ToastsStore}/>
         <AppHeader fixed>
           <Suspense  fallback={this.loading()}>
-            <DefaultHeader onLogout={e=>this.signOut(e)}/>
+            <DefaultHeader loadNoti={this._getNotis} onLogout={e=>this.signOut(e)}/>
           </Suspense>
         </AppHeader>
         <div className="app-body">

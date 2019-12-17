@@ -47,5 +47,8 @@ module.exports = {
     },
     markNoti:(notiId)=>{
         return callFetch("/notifications/"+notiId,"POST",{});
+    },
+    deleteShop:(shopId)=>{
+        return callFetch("/shops/"+shopId,"DELETE");
     }
 }

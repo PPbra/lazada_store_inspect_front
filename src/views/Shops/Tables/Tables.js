@@ -30,12 +30,28 @@ class Tables extends Component {
   }
 
   componentDidMount(){
+    this._getAllShops()
+  }
+
+  _getAllShops = ()=>{
+    this.setState({
+      shops:[]
+    })
     APICaller.getAllShops()
       .then(res=>{
         if(!!res.success){
           this.setState({
             shops:res.data
           })
+        }
+      })
+  }
+
+  _handleClickDeleteShop = (e)=>{
+    APICaller.deleteShop(e)
+      .then(res=>{
+        if(res.success){
+          this._getAllShops()
         }
       })
   }
@@ -52,15 +68,22 @@ class Tables extends Component {
   _shopsRender =()=>{
     const {shops} = this.state;
     return shops.map((shop)=>{
-      return  (<tr key={shop.id} style={{cursor:"pointer"}} onClick={()=>{
-        this._handleClickShopRow(shop);
-      }} >
+      return  (<tr key={shop.id} style={{cursor:"pointer"}}  >
                 <td>{shop.id}</td>
                   <td>{shop.name}</td>
                   <td>{dateTime.format(new Date(shop.createdAt))}</td>
                   <td>{shop.products_count}</td>
                   <td >
-                    <Badge color="success">Followed</Badge>
+                    <Badge color="success" onClick={()=>{
+                                            this._handleClickShopRow(shop);
+                                          }}>
+                      Followed
+                    </Badge>
+                  </td>
+                  <td>
+                    <Badge color="danger" onClick={()=>{
+                      this._handleClickDeleteShop(shop.id);
+                    }}>Delete</Badge>
                   </td>
               </tr>)
     })
@@ -86,6 +109,7 @@ class Tables extends Component {
                       <th>Date Add</th>
                       <th>Products Count</th>
                       <th>Status</th>
+                      <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>

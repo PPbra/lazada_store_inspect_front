@@ -73,7 +73,7 @@ import dateTime from '../../services/date-time';
     _renderProducts = ()=>{
         return this.state.products.map(e=>{
             return (
-                <tr>
+                <tr key={e.id}>
                     <td>{e.id}</td>
                     <td>{e.sku}</td>
                     <td>{e.shop}</td>
