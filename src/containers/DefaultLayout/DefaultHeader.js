@@ -4,8 +4,8 @@ import {  UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav,
 import PropTypes from 'prop-types';
 
 import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import logo from '../../assets/img/brand/logo.svg'
-import sygnet from '../../assets/img/brand/sygnet.svg'
+import logo from '../../assets/img/brand/logo.png'
+import sygnet from '../../assets/img/brand/logo.png'
 
 const propTypes = {
   children: PropTypes.node,
@@ -23,7 +23,7 @@ class DefaultHeader extends Component {
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
-          full={{ src: logo, width: 89, height: 25, alt: 'Lazada Store Inspect' }}
+          full={{ src: logo, width: 70, height: 55, alt: 'Lazada Store Inspect' }}
           minimized={{ src: sygnet, width: 30, height: 30, alt: 'Lazada Store Inspect' }}
         />
         {/* <AppSidebarToggler className="d-md-down-none" display="lg" /> */}
@@ -39,7 +39,7 @@ class DefaultHeader extends Component {
         <Nav className="ml-auto" navbar>
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle nav>
-              <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="ppbra" />
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>

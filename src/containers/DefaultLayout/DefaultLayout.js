@@ -44,9 +44,6 @@ class DefaultLayout extends Component {
   }
 
   _getNotis = () =>{
-    this.setState({
-      notis:[]
-    })
       APICaller.getNotis()
         .then(res=>{
           if(res.success){
