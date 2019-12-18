@@ -58,6 +58,12 @@ class Tables extends Component {
                       </td>
                       <td style={{cursor:"pointer"}}>
                           <Badge color="danger" onClick={()=>{
+                                                    APICaller.changeProductStatus(e.id,{doFollow:0})
+                                                      .then(res=>{
+                                                        if(res.success){
+                                                          this._getProducts()
+                                                        }
+                                                      })
                                                 }}>
                           DELETE
                         </Badge>
