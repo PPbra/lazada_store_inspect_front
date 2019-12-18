@@ -41,18 +41,21 @@ class DefaultAside extends Component {
       return(
         <div key={e.id}>
             <div className="message">
-              <div className="py-3 pb-5 mr-3 float-left">
-                <div className="avatar">
-                  <img src={'assets/img/avatars/7.jpg'} className="img-avatar" alt="phuongngo" />
-                  <span className="avatar-status badge-success"></span>
-                </div>
-              </div>
               <div>
                 <small className="text-muted">Admin</small>
                 {
-                  (e.marked)?<small style={{cursor:"pointer"}} className="text-muted float-right mt-1">Read</small>:
+                  (e.marked)?<small style={{cursor:"pointer"}} className="text-muted float-right mt-1"
+                    onClick={()=>{
+                      APICaller.markNoti(e.id,0)
+                      .then(res=>{
+                        if(res.success){
+                          this.props.loadNoti();
+                        }
+                      })  
+                    }}
+                  >Unread</small>:
                   <small style={{cursor:"pointer"}} className="text-muted float-right mt-1" onClick={()=>{
-                    APICaller.markNoti(e.id)
+                    APICaller.markNoti(e.id,1)
                       .then(res=>{
                         if(res.success){
                           this.props.loadNoti();

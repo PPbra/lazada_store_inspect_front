@@ -1,63 +1,112 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Row, Table ,Pagination,PaginationItem,PaginationLink} from 'reactstrap';
+import APICaller from '../../services/apiConnecter';
+import ProductDetailsModal from './product-detail-modal';
 
-import usersData from './UsersData'
-
-function UserRow(props) {
-  const user = props.user
-  const userLink = `/users/${user.id}`
-
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Banned' ? 'danger' :
-            'primary'
-  }
-
-  return (
-    <tr key={user.id.toString()}>
-      <th scope="row"><Link to={userLink}>{user.id}</Link></th>
-      <td><Link to={userLink}>{user.name}</Link></td>
-      <td>{user.registered}</td>
-      <td>{user.role}</td>
-      <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
-    </tr>
-  )
-}
 
 class Tables extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      products:[],
+      isOpenModal:false,
+      productDetails:{}
+    }
+  }
+
+  componentDidMount(){
+    this._getProducts();
+  }
+
+  _getProducts = ()=>{
+    APICaller.getFollowedProducts()
+      .then(res=>{
+        if(res.success){
+          this.setState({
+            products:res.data
+          })
+        }
+      })
+  }
+
+  _handleClickOpenModel = ()=>{
+    this.setState({
+      isOpenModal:!this.state.isOpenModal
+    })
+  }
+
+  _chooseProduct=(product)=>{
+    this.setState({
+      productDetails:product
+    })
+  }
+  _renderProducts = ()=>{
+      const {products} = this.state;
+      return products.map(e=>{
+        return (
+                    <tr key={e.id}>
+                      <td><Badge color="primary">{e.id}</Badge></td>
+                      <td><Badge color="secondary">{e.sku}</Badge></td>
+                      <td><Badge color="warning">{e.shop}</Badge></td>
+                      <td style={{cursor:"pointer"}}>
+                        <Badge color="success" onClick={()=>{
+                                                this._handleClickOpenModel();
+                                                this._chooseProduct(e)
+                                            }}>
+                        SHOW
+                      </Badge>
+                      </td>
+                      <td style={{cursor:"pointer"}}>
+                          <Badge color="danger" onClick={()=>{
+                                                }}>
+                          DELETE
+                        </Badge>
+                      </td>
+                    </tr>
+        )
+      })
+  }
+
+  
 
   render() {
-
-    const userList = usersData.filter((user) => user.id < 10)
-
     return (
       <div className="animated fadeIn">
+        <ProductDetailsModal modal={this.state.isOpenModal} toggle={this._handleClickOpenModel} product={this.state.productDetails}/>
         <Row>
-          <Col xl={6}>
+          <Col xs={12}>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Users <small className="text-muted">example</small>
+                <i className="fa fa-align-justify"></i> Products <small className="text-muted">followed</small>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">name</th>
-                      <th scope="col">registered</th>
-                      <th scope="col">role</th>
-                      <th scope="col">status</th>
+                      <th scope="col">ID</th>
+                      <th scope="col">SKU</th>
+                      <th scope="col">SHOPID</th>
+                      <th scope="col">DETAILS</th>
+                      <th scope="col">ACTION</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {userList.map((user, index) =>
-                      <UserRow key={index} user={user}/>
-                    )}
+                    {
+                      this._renderProducts()
+                    }
                   </tbody>
                 </Table>
+                <Pagination>
+                    <PaginationItem>
+                      <PaginationLink previous tag="button"></PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem active>
+                      <PaginationLink tag="button">1</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink next tag="button"></PaginationLink>
+                    </PaginationItem>
+                  </Pagination>
               </CardBody>
             </Card>
           </Col>

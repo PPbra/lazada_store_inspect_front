@@ -45,10 +45,16 @@ module.exports = {
     getNotis:()=>{
         return callFetch("/notifications","GET");
     },
-    markNoti:(notiId)=>{
-        return callFetch("/notifications/"+notiId,"POST",{});
+    markNoti:(notiId,value)=>{
+        return callFetch("/notifications/"+notiId,"POST",{read:value});
     },
     deleteShop:(shopId)=>{
         return callFetch("/shops/"+shopId,"DELETE");
+    },
+    getFollowedProducts:()=>{
+        return callFetch("/follow/products","GET");
+    },
+    getProductImage:(productId)=>{
+        return callFetch("/productImages/"+productId,"GET");
     }
 }

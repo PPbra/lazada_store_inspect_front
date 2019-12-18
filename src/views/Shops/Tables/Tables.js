@@ -97,7 +97,7 @@ class Tables extends Component {
           <Col xs="12" lg="12">
               <Card>
                 <CardHeader>
-                  <i className="fa fa-align-justify"></i> Followed Shops
+                  <i className="fa fa-align-justify"></i>  Shops <small className="text-muted">followed</small>
                   <Button style={{float: "right"}} color="primary" onClick={this._handleClickOpenAddShop}>Add shop</Button>
                 </CardHeader>
                 <CardBody>
