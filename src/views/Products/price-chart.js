@@ -267,7 +267,7 @@ class PriceChart extends Component {
                 <Col xs="12" sm="6" lg="3">
                   <Card className="text-white bg-info">
                     <CardBody className="pb-0">
-                      <div className="text-value">{discountPrice_data.length>1?discountPrice_data[discountPrice_data.length-1]:0}</div>
+                      <div className="text-value">{discountPrice_data.length>0?(!!discountPrice_data[discountPrice_data.length-1]?discountPrice_data[discountPrice_data.length-1]:0):0}</div>
                       <div>Discount Price</div>
                     </CardBody>
                     <div className="chart-wrapper mx-3" style={{ height: '80px' }}>
