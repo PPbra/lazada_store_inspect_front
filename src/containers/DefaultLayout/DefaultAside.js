@@ -36,8 +36,19 @@ class DefaultAside extends Component {
   _renderNotis = ()=>{
     const {notis} = this.props;
     const notiss = notis.reverse();
+    
 
     return notiss.map(e=>{
+      const data = JSON.parse(e.message);
+      const Old = JSON.parse(data.old);
+      const New = JSON.parse(data.new);
+      let message_content = "";
+      if(data.type==="shop"){
+        message_content = `Shop ${Old.name} has been changed at products count to ${New.products_count}`
+      }else{
+        message_content = `Product ${Old.title} has been changed at: \n
+        ${New.changedAt.map(e=>`${e}: ${Old[e]}->${New[e]}\n`)}`
+      }
       return(
         <div key={e.id}>
             <div className="message">
@@ -65,7 +76,7 @@ class DefaultAside extends Component {
                 }
               </div>
               <div className="text-truncate font-weight-bold">{dateTime.format(new Date(e.createdAt))}</div>
-              <small style={{color:(!!e.marked)?"#73818f":"blue"}} >{e.message}</small>
+              <small style={{color:(!!e.marked)?"#73818f":"blue"}}>{message_content}</small>
             </div>
             <hr />
         </div>

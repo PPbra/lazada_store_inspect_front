@@ -16,14 +16,24 @@ const brandDanger = getStyle('--danger')
 class PriceChart extends Component {
    
     render(){
+        const price_change = this.props.images.filter(e=>e.changedAt.includes("price"));
+        const discountPrice_change = this.props.images.filter(e=>e.changedAt.includes("discountPrice"));
+        const rating_change = this.props.images.filter(e=>e.changedAt.includes("rating"));
+        const reviews_change = this.props.images.filter(e=>e.changedAt.includes("reviews"));
+        // const title_change = this.props.images.filter(e=>e.changedAt.includes("title"));
+        console.log(price_change);
+        const price_lables = price_change.map(e=>dateTime.format(new Date(e.createdAt)));
+        const discountPrice_lables = discountPrice_change.map(e=>dateTime.format(new Date(e.createdAt)));
+        const reviews_lables = reviews_change.map(e=>dateTime.format(new Date(e.createdAt)));
+        const rating_lables = rating_change.map(e=>dateTime.format(new Date(e.createdAt)));
+        // const title_lables = title_change.map(e=>dateTime.format(new Date(e.createdAt)));
 
-        const labels = this.props.images.map(e=>dateTime.format(new Date(e.createdAt)));
-        const price_data = this.props.images.map(e=>e.price);
-        const discountPrice_data = this.props.images.map(e=>e.priceDiscount);
-        const reviews_data = this.props.images.map(e=>e.reviews);
-        const rating_data = this.props.images.map(e=>e.rating);
+        const price_data = price_change.map(e=>e.price);
+        const discountPrice_data = discountPrice_change.map(e=>e.discountPrice);
+        const reviews_data = rating_change.map(e=>e.reviews);
+        const rating_data = reviews_change.map(e=>e.rating);
         const data = {
-            labels: labels,
+            labels: price_lables,
             datasets: [
               {
                 label: 'Price',
@@ -78,7 +88,7 @@ class PriceChart extends Component {
             }
           }
         const data2 = {
-            labels: labels,
+            labels: discountPrice_lables,
             datasets: [
               {
                 label: 'Discount Price',
@@ -132,7 +142,7 @@ class PriceChart extends Component {
             }
           }
         const data3 = {
-            labels: labels,
+            labels: rating_lables,
             datasets: [
               {
                 label: 'Reviews',
@@ -187,7 +197,7 @@ class PriceChart extends Component {
             }
           }
         const data4 = {
-            labels: labels,
+            labels: reviews_lables,
             datasets: [
               {
                 label: 'Rating',
@@ -257,7 +267,7 @@ class PriceChart extends Component {
                 <Col xs="12" sm="6" lg="3">
                   <Card className="text-white bg-info">
                     <CardBody className="pb-0">
-                      <div className="text-value">{!!discountPrice_data[discountPrice_data.length-1]?discountPrice_data[discountPrice_data.length-1]:0}</div>
+                      <div className="text-value">{discountPrice_data.length>1?discountPrice_data[discountPrice_data.length-1]:0}</div>
                       <div>Discount Price</div>
                     </CardBody>
                     <div className="chart-wrapper mx-3" style={{ height: '80px' }}>
@@ -268,7 +278,7 @@ class PriceChart extends Component {
                 <Col xs="12" sm="6" lg="3">
                   <Card className="text-white bg-info">
                     <CardBody className="pb-0">
-                      <div className="text-value">{reviews_data[reviews_data.length-1]}</div>
+                      <div className="text-value">{reviews_data.length>0?reviews_data[reviews_data.length-1]:0}</div>
                       <div>Riviews</div>
                     </CardBody>
                     <div className="chart-wrapper mx-3" style={{ height: '80px' }}>
@@ -279,7 +289,7 @@ class PriceChart extends Component {
                 <Col xs="12" sm="6" lg="3">
                   <Card className="text-white bg-info">
                     <CardBody className="pb-0">
-                      <div className="text-value">{rating_data[rating_data.length-1]}</div>
+                      <div className="text-value">{rating_data.length>0?rating_data[rating_data.length-1]:0}</div>
                       <div>Rating</div>
                     </CardBody>
                     <div className="chart-wrapper mx-3" style={{ height: '80px' }}>

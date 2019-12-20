@@ -4,7 +4,7 @@ import {Component} from 'react';
 import ProductsCountChart from './products_count_chart';
 import APICaller from '../../services/apiConnecter';
 import { ToastsStore} from 'react-toasts';
-import dateTime from '../../services/date-time';
+// import dateTime from '../../services/date-time';
 
  class ShopDetails extends Component {
      
@@ -35,7 +35,7 @@ import dateTime from '../../services/date-time';
         APICaller.productsInit(shopId)
             .then(res=>{
                 if(res.success){
-                    ToastsStore.success("Server is getting products!");
+                    ToastsStore.success("Server is getting products! Wait a few minutes");
                     this.props.toggle();
                 }
                 else{
@@ -72,12 +72,19 @@ import dateTime from '../../services/date-time';
 
     _renderProducts = ()=>{
         return this.state.products.map(e=>{
+            // let productInfo = {};
+            // APICaller.getProductInfo(e.id)
+            //     .then(res=>{
+            //         if(res.success){
+            //             productInfo = res.data
+            //         }
+            //     })
             return (
                 <tr key={e.id}>
-                    <td>{e.id}</td>
+                    <td><Badge color="warning">{e.id}</Badge></td>
+                    <td ><Badge color="secondary">{(e.title.length>=40)?e.title.substring(0,40)+"...":e.title}</Badge></td>
                     <td>{e.sku}</td>
-                    <td>{e.shop}</td>
-                    <td>{dateTime.format(new Date(e.createdAt))}</td>
+                    <td><Badge color="primary">{e.price}</Badge></td>
                     <td style={{cursor:"pointer"}} onClick={()=>{this._handleClickProductStatus(e)}}>
                     {
                                 (!!e.doFollow)?<Badge color="success">Followed</Badge>:<Badge color="danger">No follow</Badge>
@@ -108,10 +115,10 @@ import dateTime from '../../services/date-time';
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th >NAME</th>
                                         <th>SKU</th>
-                                        <th>SHOPID</th>
-                                        <th>Date Add</th>
-                                        <th>Status</th>
+                                        <th>PRICE</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </thead>
                                 <tbody>

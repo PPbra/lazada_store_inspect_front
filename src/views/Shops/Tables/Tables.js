@@ -70,9 +70,9 @@ class Tables extends Component {
     return shops.map((shop)=>{
       return  (<tr key={shop.id} style={{cursor:"pointer"}}  >
                 <td>{shop.id}</td>
-                  <td>{shop.name}</td>
+                  <td><Badge color="secondary">{shop.name}</Badge></td>
                   <td>{dateTime.format(new Date(shop.createdAt))}</td>
-                  <td>{shop.products_count}</td>
+                  <td><Badge color="primary">{shop.products_count}</Badge></td>
                   <td >
                     <Badge color="success" onClick={()=>{
                                             this._handleClickShopRow(shop);
@@ -88,10 +88,11 @@ class Tables extends Component {
               </tr>)
     })
   }
+
   render() {
     return (
       <div className="animated fadeIn">
-        <AddShopModel modal={this.state.isOpenAddShop} toggle={this._handleClickOpenAddShop}/>
+        <AddShopModel modal={this.state.isOpenAddShop} toggle={this._handleClickOpenAddShop} addShopComplete={this._getAllShops}/>
         <ShopDetails modal={this.state.isOpenShopDetails} toggle={this._handleClickOpenShopDetails} shop={this.state.shopDetails}/>
         <Row>
           <Col xs="12" lg="12">
@@ -104,12 +105,12 @@ class Tables extends Component {
                   <Table responsive>
                     <thead>
                     <tr>
-                      <th>ShopId</th>
-                      <td>Name</td>
-                      <th>Date Add</th>
-                      <th>Products Count</th>
-                      <th>Status</th>
-                      <th>Actions</th>
+                      <th>SHOPID</th>
+                      <td>NAME</td>
+                      <th>DATE ADD</th>
+                      <th>PRODUCTS COUNT</th>
+                      <th>STATUS</th>
+                      <th>ACTIONS</th>
                     </tr>
                     </thead>
                     <tbody>

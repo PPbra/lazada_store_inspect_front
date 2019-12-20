@@ -16,9 +16,9 @@ import PriceChart from './price-chart';
     componentWillReceiveProps(nextProps) {
         const { product } = this.props
          if (nextProps.product !== product) {
-            this._getProductImages()
+            this._getProductImages(nextProps.product.id)
          }
-        }
+    }
     
 
     _handleClickCrawl = ()=>{
@@ -26,8 +26,8 @@ import PriceChart from './price-chart';
     }
 
     
-    _getProductImages =()=>{
-        const productId= this.props.product.id;
+    _getProductImages =(productId)=>{
+       
         APICaller.getProductImage(productId)
             .then(res=>{
                 if(res.success){
@@ -39,9 +39,8 @@ import PriceChart from './price-chart';
     }
 
     render(){
-        console.log(this.state.images);
-        const title = (this.state.images.length!==0)?this.state.images[this.state.images.length-1].title:"TITLE"
-        const url = (this.state.images.length!==0)?this.state.images[this.state.images.length-1].pdpUrl:"URL"
+        const title = this.props.product.title?this.props.product.title:"TITLE";
+        const url = this.props.product.pdpUrl?this.props.product.pdpUrl:"URL";
         return (
             <div>
               <Modal isOpen={this.props.modal} toggle={this.props.toggle} size="xl">
@@ -51,10 +50,10 @@ import PriceChart from './price-chart';
                     <Jumbotron>
                         <Row>
                             <Col>
-                                <h1>Title <Badge color="primary">{title.substring(0, 50)}...</Badge></h1>
+                                <h1>Title <Badge color="primary">{title.length>50?title.substring(0, 50)+"...":title}</Badge></h1>
                             </Col>
                             <Col>
-    <h1>URL <Badge color="success"><a href={url} style={{color:"white",textDecoration:"none"}}>{url.substring(0,50)}...</a></Badge></h1>
+    <h1>URL <Badge color="success"><a href={url} style={{color:"white",textDecoration:"none"}}>{url.length>50?url.substring(0,50)+"...":url}</a></Badge></h1>
                             </Col>
                         </Row>
                     </Jumbotron>

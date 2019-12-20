@@ -12,8 +12,9 @@ import { ToastsStore} from 'react-toasts';
         APICaller.addShopByURL(URL)
             .then(res=>{
                 if(res.success){
-                    ToastsStore.success("Add shop completed!")
+                    ToastsStore.success("Add shop completed! After 5 minutes shop will be followed!");
                     this.props.toggle();
+                    this.props.addShopComplete()
                 }else{
                     ToastsStore.warning(res.reason);
                 }

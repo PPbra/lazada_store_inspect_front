@@ -26,8 +26,18 @@ class DefaultLayout extends Component {
     this.state = {
       notis:[]
     }
-    subscribeToNoti((data)=>{
-      ToastsStore.success(data,20000);
+    subscribeToNoti((e)=>{
+      const data = JSON.parse(e);
+      const Old = JSON.parse(data.old);
+      const New = JSON.parse(data.new);
+      let message_content = "";
+      if(data.type==="shop"){
+        message_content = `Shop ${Old.name} has been changed at products count to ${New.products_count}`
+      }else{
+        message_content = `Product ${Old.title} has been changed at: \n
+        ${New.changedAt.map(e=>`${e}: ${Old[e]}->${New[e]}\n`)}`
+      }
+      ToastsStore.success(message_content,20000);
       this._getNotis();
     })
   }

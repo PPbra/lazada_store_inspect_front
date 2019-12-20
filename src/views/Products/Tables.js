@@ -37,7 +37,8 @@ class Tables extends Component {
 
   _chooseProduct=(product)=>{
     this.setState({
-      productDetails:product
+      productDetails:product,
+      isOpenModal:true
     })
   }
   _renderProducts = ()=>{
@@ -45,13 +46,14 @@ class Tables extends Component {
       return products.map(e=>{
         return (
                     <tr key={e.id}>
-                      <td><Badge color="primary">{e.id}</Badge></td>
-                      <td><Badge color="secondary">{e.sku}</Badge></td>
+                      <td><Badge color="secondary">{e.id}</Badge></td>
+                      <td>{e.sku}</td>
                       <td><Badge color="warning">{e.shop}</Badge></td>
+                      <td><Badge color="secondary">{(e.title.length>100)?e.title.substring(0,100)+"...":e.title}</Badge></td>
+                      <td><Badge color="primary">{(e.discountPrice>0)?e.discountPrice:e.price}</Badge></td>
                       <td style={{cursor:"pointer"}}>
                         <Badge color="success" onClick={()=>{
-                                                this._handleClickOpenModel();
-                                                this._chooseProduct(e)
+                                                this._chooseProduct(e);
                                             }}>
                         SHOW
                       </Badge>
@@ -92,6 +94,8 @@ class Tables extends Component {
                       <th scope="col">ID</th>
                       <th scope="col">SKU</th>
                       <th scope="col">SHOPID</th>
+                      <th scope="col">NAME</th>
+                      <th scope="col">CURRENT PRICE</th>
                       <th scope="col">DETAILS</th>
                       <th scope="col">ACTION</th>
                     </tr>

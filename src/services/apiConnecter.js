@@ -56,5 +56,8 @@ module.exports = {
     },
     getProductImage:(productId)=>{
         return callFetch("/productImages/"+productId,"GET");
+    },
+    getProductInfo:(productId)=>{
+        return callFetch("/products/"+productId,"GET");
     }
 }
