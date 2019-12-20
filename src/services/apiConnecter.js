@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080";
+const URL = "http://34.221.114.49:8080";
 const headers = {
     "Content-Type": "application/json"
 }
