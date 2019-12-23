@@ -59,12 +59,14 @@ import { ToastsStore} from 'react-toasts';
     }
 
     _handleClickProductStatus = (product) =>{
+        ToastsStore.warning("Changing status od" + product.title +"!");
        const body =  {
             doFollow:!product.doFollow
         }
         APICaller.changeProductStatus(product.id,body)
             .then(res=>{
                 if(res.success){
+                    ToastsStore.success(`Changed ${product.title} at status!`)
                     this._getProducts();
                 }
             })

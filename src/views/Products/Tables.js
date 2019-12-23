@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table ,Pagination,PaginationItem,PaginationLink} from 'reactstrap';
 import APICaller from '../../services/apiConnecter';
 import ProductDetailsModal from './product-detail-modal';
+import {ToastsStore} from 'react-toasts';
 
 
 class Tables extends Component {
@@ -60,10 +61,12 @@ class Tables extends Component {
                       </td>
                       <td style={{cursor:"pointer"}}>
                           <Badge color="danger" onClick={()=>{
+                                                    ToastsStore.warning("Unfollowing"+e.title)
                                                     APICaller.changeProductStatus(e.id,{doFollow:0})
                                                       .then(res=>{
                                                         if(res.success){
-                                                          this._getProducts()
+                                                          ToastsStore.success(`Unfollow ${e.title} success!`)
+                                                          this._getProducts();
                                                         }
                                                       })
                                                 }}>
@@ -80,6 +83,7 @@ class Tables extends Component {
   render() {
     return (
       <div className="animated fadeIn">
+
         <ProductDetailsModal modal={this.state.isOpenModal} toggle={this._handleClickOpenModel} product={this.state.productDetails}/>
         <Row>
           <Col xs={12}>
